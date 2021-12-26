@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    {{board}}
+    <div id="board">
+        <div id="row" v-for="(row, rowIndex) in board">
+            <button v-for="(button, buttonIndex) in row" @click="play(rowIndex, buttonIndex)" :disabled="button!=empty">
+                {{board[rowIndex][buttonIndex]}}
+            </button>
+        </div>
+    </div>
+
+</body>
+<script type="module">
+    import { createApp } from 'https://unpkg.com/petite-vue?module'
+    const empty = "N"
+    createApp({
+        empty,
+        board: Array(3).fill().map(_ => Array(3).fill(empty)),
+        turnNumber: 0,
+        play(x, y) {
+            if (this.turnNumber % 2 === 0) {
+                this.board[x][y] = "x"
+            }
+            else {
+                this.board[x][y] = "o"
+            }
+            this.turnNumber++
+        }
+    }).mount()
+</script>
